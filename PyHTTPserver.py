@@ -1,0 +1,22 @@
+import socket
+ip = input('Enter hostname/ip:')
+port = int(input('Enter port:'))
+timeout = int(input('Set timeout:'))
+while True:
+ sock = socket.socket()
+ sock.bind( (ip, port) )
+ sock.listen(10)
+ conn, addr = sock.accept()
+ data = conn.recv(16384)
+ udata = data.decode("utf-8")
+ print("Data: " + udata)
+ conn.send(b"Hello!\n")
+ conn.send(b"     \n")
+ conn.send(b"Your data: " + udata.encode())
+ conn.close()
+ conn, addr = sock.accept()
+ conn.settimeout(timeout)
+ data = conn.recv(16384)
+ if not data:
+     print("No data")
+     conn.close()
