@@ -1,0 +1,4 @@
+count = int (0)
+while True:
+    count = count+1
+    input(count)
